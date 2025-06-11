@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import db from "./database/configdb.js";
 import userRoute from "./routes/user.route.js";
+import produtoRoute from "./routes/produto.route.js";
 import cors from 'cors';
 import User from './models/User.js'; // Importado para mostrar no Banco do Mongo Express
 
@@ -30,6 +31,7 @@ app.use(express.json());
 
 
 app.use("/users", userRoute);
+app.use("/produtos", produtoRoute);
 
  // app.use('/tasks', taskRoutes); // rota protegida
 
