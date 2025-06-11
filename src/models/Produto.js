@@ -17,6 +17,11 @@ const produtoSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  lojaId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Loja',
+    required: true
   }
 });
 
