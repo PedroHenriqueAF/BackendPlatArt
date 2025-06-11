@@ -34,7 +34,7 @@ app.use("/users", userRoute);
  // app.use('/tasks', taskRoutes); // rota protegida
 
 app.get("/", (req, res) => {
-    res.send({message: 'Hello World!'});
+    res.send({message: 'Backend is running!'});
 });
 
 
