@@ -1,4 +1,4 @@
-import Produto from '../models/produto.js'; // ajuste o caminho conforme sua estrutura
+import Produto from '../models/Produto.js'; // ajuste o caminho conforme sua estrutura
 
 export const criarProduto = async ({ nome, preco, imagem, vendedorId }) => {
   try {
