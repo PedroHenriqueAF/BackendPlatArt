@@ -1,51 +1,64 @@
 import * as userService from '../services/user.service.js';
 
-// POST /register
 const register = async (req, res) => {
-    try {
-        const { id, nome, tipo } = req.body;
-        const user = await userService.registerUser({ id, nome, tipo });
-        res.status(201).json(user);
-        console.log("Usuário registrado com sucesso:", user)
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+  try {
+    const { nome, tipo, password } = req.body;
+    if (!nome || !tipo || !password) {
+      return res.status(400).json({ message: 'Campos nome, tipo e senha são obrigatórios' });
     }
+
+    const result = await userService.registerUser({ nome, tipo, password });
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message });
+    }
+
+    return res.status(201).json({
+      message: 'Usuário registrado com sucesso',
+      user: result.data
+    });
+  } catch (error) {
+    console.error('Erro no controller register:', error);
+    return res.status(500).json({ message: 'Erro ao registrar usuário' });
+  }
 };
 
-// POST /login
 const login = async (req, res) => {
-    try {
-        const { id, nome } = req.body;
-        const user = await userService.authenticateUser({ id, nome });
-        res.status(200).json(user);
-        console.log("Usuário autenticado com sucesso:") 
-    } catch (error) {
-        res.status(401).json({ error: error.message });
+  try {
+    const { nome, password } = req.body;
+    if (!nome || !password) {
+      return res.status(400).json({ message: 'Nome e senha são obrigatórios' });
     }
+
+    const result = await userService.loginUser({ nome, password });
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message });
+    }
+
+    return res.status(200).json({
+      message: 'Login realizado com sucesso',
+      token: result.data.token,
+      user: result.data.user
+    });
+  } catch (error) {
+    console.error('Erro no controller login:', error);
+    return res.status(500).json({ message: 'Erro ao fazer login' });
+  }
 };
 
-// GET /:identifier
-const getUserByIdentifier = async (req, res) => {
-    try {
-        const identifier = req.params.identifier;
-        // Tenta buscar por id (número) ou nome (string)
-        let user;
-        if (!isNaN(identifier)) {
-            user = await userService.getUserById(Number(identifier));
-        } else {
-            user = await userService.getUserByNome(identifier);
-        }
-        if (!user) {
-            return res.status(404).json({ error: 'Usuário não encontrado' });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+const getProfile = async (req, res) => {
+  try {
+    const result = await userService.getUserById(req.userId);
+    if (!result.success) {
+      return res.status(404).json({ message: result.message });
     }
+
+    return res.status(200).json({ user: result.data });
+  } catch (error) {
+    console.error('Erro no controller getProfile:', error);
+    return res.status(500).json({ message: 'Erro ao obter perfil do usuário' });
+  }
 };
 
-export default {
-    register,
-    login,
-    getUserByIdentifier,
-};
+export default { register, login, getProfile };

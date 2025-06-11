@@ -14,7 +14,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['cliente', 'vendedor'],
         required: true,
-    }
+    },
+    password: {
+        type: String,
+        required: true,
+        select: false
+      }
+      
 });
 
 const User = mongoose.model('User', userSchema);
