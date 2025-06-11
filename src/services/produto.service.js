@@ -1,10 +1,11 @@
-import Produto from '../models/produto.js';
+
+import Produto from '../models/Produto.js';
 
 export const criarProduto = async ({ nome, preco, imagem, vendedorId, lojaId }) => {
   const produto = new Produto({ nome, preco, imagem, vendedorId, lojaId });
   await produto.save();
   return { data: produto };
-};
+
 
 export const listarProdutos = async () => {
   const produtos = await Produto.find().populate('vendedorId').populate('lojaId');
