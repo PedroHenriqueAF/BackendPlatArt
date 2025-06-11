@@ -4,8 +4,8 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "id": 1,
-    "nome": "novo_usuario",
-    "tipo": "cliente",
+    "nome": "joao",
+    "tipo": "vendedor",
     "password": "senha123"
   }'
 
