@@ -4,7 +4,8 @@ import Produto from '../models/Produto.js';
 export const criarProduto = async ({ nome, preco, imagem, vendedorId, lojaId }) => {
   const produto = new Produto({ nome, preco, imagem, vendedorId, lojaId });
   await produto.save();
-  return { data: produto };
+  return { data: produto }
+};
 
 
 export const listarProdutos = async () => {
